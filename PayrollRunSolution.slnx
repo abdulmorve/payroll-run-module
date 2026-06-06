@@ -1,4 +1,11 @@
 <Solution>
+  <Folder Name="/Database/">
+    <File Path="Schema.sql" />
+    <File Path="SeedData.sql" />
+  </Folder>
+  <Folder Name="/Database/StoredProcedures/">
+    <File Path="usp_RunPayroll.sql" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
