@@ -2,10 +2,12 @@ import type { PayrollResult } from "../types/payroll";
 
 interface Props {
   payroll: PayrollResult[];
+  onViewPayslip: (runId: number, employeeId: number) => void;
 }
 
 export default function PayrollTable({
-  payroll
+  payroll,
+  onViewPayslip
 }: Props) {
   if (!payroll.length) return null;
 
@@ -18,6 +20,7 @@ export default function PayrollTable({
           <th>PF</th>
           <th>Tax</th>
           <th>Net</th>
+          <th>Action</th>
         </tr>
       </thead>
 
@@ -29,6 +32,18 @@ export default function PayrollTable({
             <td>{item.pfDeduction}</td>
             <td>{item.professionalTax}</td>
             <td>{item.netPay}</td>
+            <td>
+              <button
+                onClick={() =>
+                  onViewPayslip(
+                    item.payrollRunId,
+                    item.employeeId
+                  )
+                }
+              >
+                View Payslip
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
