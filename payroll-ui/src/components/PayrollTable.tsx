@@ -10,7 +10,14 @@ export default function PayrollTable({
   payroll,
   onViewPayslip
 }: Props) {
-  if (!payroll.length) return null;
+  
+  if (!payroll.length) {
+    return (
+      <div className="empty-state">
+        No payroll records found.
+      </div>
+    );
+  }
 
   return (
     <div className="table-card">

@@ -3,9 +3,11 @@ import { useState } from "react";
 import PayrollForm from "../components/PayrollForm";
 import PayrollTable from "../components/PayrollTable";
 import PayslipModal from "../components/PayslipModal";
+import Notification from "../components/Notification";
 import { usePayroll } from "../hooks/usePayroll";
 import { getPayslip } from "../services/payrollService";
 import type { Payslip } from "../types/payslip";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function PayrollPage() {
     const [month, setMonth] = useState(6);
@@ -16,7 +18,10 @@ export default function PayrollPage() {
     const {
         payroll,
         runPayrollAndLoad,
-        loadPayroll
+        loadPayroll,
+        loading,
+        message,
+        error,
     } = usePayroll();
 
     const handleViewPayslip = async (
@@ -30,16 +35,29 @@ export default function PayrollPage() {
 
     return (
         <div className="page">
+            {loading && <LoadingSpinner />}
             <div className="page-header">
-        <h1 className="page-title">
-            Payroll Run Module
-        </h1>
+                <h1 className="page-title">
+                    Payroll Run Module
+                </h1>
 
-        <p className="page-subtitle">
-            Generate and view payroll records
-        </p>
-    </div>
+                <p className="page-subtitle">
+                    Generate and view payroll records
+                </p>
+            </div>
+            {message && (
+                <Notification
+                    message={message}
+                    type="success"
+                />
+            )}
 
+            {error && (
+                <Notification
+                    message={error}
+                    type="error"
+                />
+            )}
             <PayrollForm
                 month={month}
                 year={year}
