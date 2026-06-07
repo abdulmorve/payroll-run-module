@@ -19,4 +19,5 @@ public class PayrollResultDto
     public decimal ProfessionalTax { get; set; }
 
     public decimal NetPay { get; set; }
+    public int PayrollRunId { get; set; }
 }

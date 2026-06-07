@@ -31,15 +31,19 @@ public class PayrollController : ControllerBase
                         "Payroll generated successfully."
                 });
         }
-        catch (SqlException ex)
-            when (ex.Message.Contains(
-                "Payroll already exists"))
+        catch (PayrollAlreadyExistsException ex)
         {
-            return Conflict(
-                new
-                {
-                    Message = ex.Message
-                });
+            return Conflict(new { ex.Message });
+        }
+
+        catch (AttendanceNotFoundException ex)
+        {
+            return BadRequest(new { ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                new { Message = "An unexpected error occurred." });
         }
     }
 
@@ -51,7 +55,10 @@ public class PayrollController : ControllerBase
 
         if (!payroll.Any())
         {
-            return NotFound();
+            return NotFound(new
+            {
+                Message = $"Payroll not found for {month}/{year}"
+            });
         }
 
         return Ok(payroll);
@@ -63,7 +70,13 @@ public class PayrollController : ControllerBase
         var payslip = await _payrollService.GetPayslipAsync(runId, employeeId);
 
         if (payslip is null)
-            return NotFound();
+        {
+            return NotFound(new
+            {
+                Message = "Payslip not found"
+            });
+        }
+
 
         return Ok(payslip);
     }

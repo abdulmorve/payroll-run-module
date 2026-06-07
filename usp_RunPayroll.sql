@@ -28,6 +28,22 @@ BEGIN
         RETURN;
     END
 
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM Attendance
+        WHERE Month = @Month
+          AND Year = @Year
+    )
+    BEGIN
+        RAISERROR(
+            'Attendance data not found for the selected month and year.',
+            16,
+            1
+        );
+        RETURN;
+    END
+
     BEGIN TRANSACTION
     -----------------------------------------------------
     -- Create Payroll Run
