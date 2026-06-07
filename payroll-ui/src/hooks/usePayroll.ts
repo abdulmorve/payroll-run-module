@@ -7,6 +7,8 @@ export function usePayroll() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalRecords, setTotalRecords] = useState(0);
 
     useEffect(() => {
         if (!message && !error)
@@ -20,7 +22,7 @@ export function usePayroll() {
         return () => clearTimeout(timer);
     }, [message, error]);
 
-    const runPayrollAndLoad = async (month: number, year: number) => {
+    const runPayrollAndLoad = async (month: number, year: number, pageNumber: number, pageSize: number) => {
         try {
             setLoading(true);
     
@@ -30,14 +32,24 @@ export function usePayroll() {
     
             await runPayroll(month, year);
     
-            const response = await getPayroll(month, year);
+            const response = await getPayroll(month, year,
+                pageNumber,
+                pageSize);
     
-            setPayroll(response.data.data ?? []);
-    
+            setPayroll(response.data.data.data ?? []);
+            setTotalPages(
+                response.data.data.totalPages ?? 0
+            );
+            
+            setTotalRecords(
+                response.data.data.totalRecords
+            );
             setMessage("Payroll generated successfully.");
         }
         catch (err: any) {
             setPayroll([]);
+            setTotalPages(0);
+            setTotalRecords(0);
             setError(
                 err.response?.data?.message ??
                 "Something went wrong."
@@ -48,7 +60,7 @@ export function usePayroll() {
         }
     };
 
-    const loadPayroll = async (month: number, year: number) => {
+    const loadPayroll = async (month: number, year: number, pageNumber: number, pageSize: number) => {
         try {
             setLoading(true);
     
@@ -56,14 +68,24 @@ export function usePayroll() {
             setMessage("");
             setPayroll([]);
     
-            const response = await getPayroll(month, year);
+            const response = await getPayroll(month, year,
+                pageNumber,
+                pageSize);
     
-            setPayroll(response.data.data ?? []);
-    
+            setPayroll(response.data.data.data ?? []);
+            setTotalPages(
+                response.data.data.totalPages ?? 0
+            );
+            
+            setTotalRecords(
+                response.data.data.totalRecords
+            );
             setMessage("Payroll loaded successfully.");
         }
         catch (err: any) {
             setPayroll([]);
+            setTotalPages(0);
+            setTotalRecords(0);
             setError(
                 err.response?.data?.message ??
                 "Unable to load payroll."
@@ -80,6 +102,7 @@ export function usePayroll() {
         message,
         error,
         runPayrollAndLoad,
-        loadPayroll
+        loadPayroll,
+        totalPages
     };
 }

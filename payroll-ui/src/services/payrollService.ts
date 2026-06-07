@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { ApiResponse } from "../types/apiResponse";
+import type { PagedResponse } from "../types/pagedResponse.ts";
 import type { PayrollResult } from "../types/payroll";
 import type { Payslip } from "../types/payslip";
 
@@ -19,10 +20,12 @@ export const runPayroll = async (
 
 export const getPayroll = async (
   month: number,
-  year: number
+  year: number,
+  pageNumber: number,
+  pageSize: number
 ) => {
-  return await api.get<ApiResponse<PayrollResult[]>>(
-    `/payroll/${month}/${year}`
+  return await api.get<ApiResponse<PagedResponse<PayrollResult>>>(
+      `/payroll/${month}/${year}?pageNumber=${pageNumber}&pageSize=${pageSize}`
   );
 };
 

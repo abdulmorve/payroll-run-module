@@ -16,9 +16,26 @@ public class PayrollRepository : IPayrollRepository
         _connectionFactory = connectionFactory;
     }
 
-    public async Task<IEnumerable<PayrollResultDto>>GetPayrollAsync(int month, int year)
+    public async Task<PagedResponse<PayrollResultDto>> GetPayrollAsync(int month, int year, int pageNumber, int pageSize)
     {
         using var connection = _connectionFactory.CreateConnection();
+
+        var countSql = @"SELECT COUNT(*)
+                 FROM PayrollRun PR
+                 INNER JOIN PayrollDetails PD
+                    ON PR.PayrollRunId = PD.PayrollRunId
+                 INNER JOIN Employees E
+                    ON PD.EmployeeId = E.EmployeeId
+                 INNER JOIN Attendance A
+                    ON E.EmployeeId = A.EmployeeId
+                 WHERE
+                    PR.Month = @Month
+                    AND PR.Year = @Year
+                    AND A.Month = @Month
+                    AND A.Year = @Year";
+
+        var totalRecords =
+        await connection.ExecuteScalarAsync<int>(countSql, new { Month = month, Year = year });
 
         var sql = @"SELECT
                     E.EmployeeId,
@@ -42,15 +59,29 @@ public class PayrollRepository : IPayrollRepository
                     PR.Month = @Month
                     AND PR.Year = @Year
                     AND A.Month = @Month
-                    AND A.Year = @Year";
+                    AND A.Year = @Year
+                ORDER BY E.EmployeeId
+                OFFSET @Offset ROWS
+                FETCH NEXT @PageSize ROWS ONLY;";
 
-        return await connection.QueryAsync<PayrollResultDto>(
+        var payroll = await connection.QueryAsync<PayrollResultDto>(
             sql,
             new
             {
                 Month = month,
-                Year = year
+                Year = year,
+                Offset = (pageNumber - 1) * pageSize,
+                PageSize = pageSize
             });
+        return new PagedResponse<PayrollResultDto>
+        {
+            Data = payroll,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalRecords = totalRecords,
+            TotalPages = (int)Math.Ceiling(
+        totalRecords / (double)pageSize)
+        };
     }
 
     public async Task<PayrollResultDto?> GetPayslipAsync(int runId, int employeeId)

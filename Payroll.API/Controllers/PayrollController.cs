@@ -55,11 +55,11 @@ public class PayrollController : ControllerBase
 
     [HttpGet("{month:int}/{year:int}")]
     public async Task<IActionResult>
-    GetPayroll(int month, int year)
+    GetPayroll(int month, int year, int pageNumber = 1, int pageSize = 10)
     {
-        var payroll = await _payrollService.GetPayrollAsync(month, year);
+        var payroll = await _payrollService.GetPayrollAsync(month, year, pageNumber, pageSize);
 
-        if (!payroll.Any())
+        if (!payroll.Data.Any())
         {
             return NotFound(new ApiResponse<object>
             {
@@ -68,7 +68,7 @@ public class PayrollController : ControllerBase
             });
         }
 
-        return Ok(new ApiResponse<IEnumerable<PayrollResultDto>>
+        return Ok(new ApiResponse<PagedResponse<PayrollResultDto>>
         {
             Success = true,
             Message = "Payroll retrieved successfully",

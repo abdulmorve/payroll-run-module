@@ -8,9 +8,11 @@ public interface IPayrollRepository
         int month,
         int year);
 
-    Task<IEnumerable<PayrollResultDto>> GetPayrollAsync(
+    Task<PagedResponse<PayrollResultDto>> GetPayrollAsync(
         int month,
-        int year);
+        int year, 
+        int pageNumber,
+        int pageSize);
 
     Task<PayrollResultDto?> GetPayslipAsync(
         int runId,

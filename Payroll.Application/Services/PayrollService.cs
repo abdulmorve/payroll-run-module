@@ -12,9 +12,9 @@ public class PayrollService : IPayrollService
         _payrollRepository = payrollRepository;
     }
 
-    public async Task<IEnumerable<PayrollResultDto>> GetPayrollAsync(int month, int year)
+    public async Task<PagedResponse<PayrollResultDto>> GetPayrollAsync(int month, int year, int pageNumber, int pageSize)
     {
-        return await _payrollRepository.GetPayrollAsync(month, year);
+        return await _payrollRepository.GetPayrollAsync(month, year, pageNumber, pageSize);
     }
 
     public async Task<PayrollResultDto?> GetPayslipAsync(int runId, int employeeId)
