@@ -35,7 +35,7 @@ export default function PayslipModal({
                 </div>
 
                 <div className="modal-body">
-
+                    
                     <div className="employee-name">
                         {payslip.name}
                     </div>
@@ -95,7 +95,29 @@ export default function PayslipModal({
                         </div>
 
                     </div>
+                    <div className="modal-actions">
 
+                        <button
+                            className="print-btn"
+                            onClick={() => {
+                                document.body.classList.add("printing");
+                            
+                                window.print();
+                            
+                                document.body.classList.remove("printing");
+                            }}
+                        >
+                            Print Payslip
+                        </button>
+
+                        <button
+                            className="close-action-btn"
+                            onClick={onClose}
+                        >
+                            Close
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>

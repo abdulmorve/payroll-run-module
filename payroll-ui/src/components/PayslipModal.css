@@ -96,6 +96,8 @@
     padding: 16px;
 
     text-align: center;
+
+    page-break-inside: avoid;
 }
 
 .net-pay-label {
@@ -110,4 +112,48 @@
 
 body.modal-open {
     overflow: hidden;
+}
+
+.modal-actions {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 12px;
+}
+
+.print-btn {
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 6px;
+
+    background: #16a34a;
+    color: white;
+
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #15803d;
+}
+
+
+@media print {
+
+    body:not(.printing) * {
+        visibility: hidden;
+    }
+
+    body.printing .modal-content,
+    body.printing .modal-content * {
+        visibility: visible;
+    }
+
+    body.printing .modal-actions,
+    body.printing .close-btn {
+        display: none;
+    }
 }

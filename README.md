@@ -253,16 +253,17 @@ Request:
 ### Get Payroll
 
 ```http
-GET /api/payroll/{month}/{year}
+GET /api/payroll/{month}/{year}?pageNumber=1&pageSize=10
 ```
 
 Example:
 
 ```http
-GET /api/payroll/6/2026
+GET /api/payroll/{month}/{year}?pageNumber=1&pageSize=10
 ```
 
 ---
+
 
 ### Get Payslip
 
@@ -284,6 +285,8 @@ GET /api/payroll/1/slip/1
 * Load existing payroll records
 * View payroll results in a responsive table
 * View employee payslip in a modal dialog
+* Printable employee payslip view using browser print functionality
+* Offset-based pagination implemented for payroll retrieval
 * Loading indicators
 * Success and error notifications
 * Responsive layout
@@ -402,10 +405,8 @@ Given additional time, I would:
 * Add JWT-based authentication and authorization
 * Implement global exception middleware
 * Add audit trail tracking for payroll runs
-* Generate downloadable PDF payslips
 * Containerize the application using Docker
 * Configure CI/CD using GitHub Actions
-* Add pagination and filtering capabilities
 * Improve accessibility and UI/UX
 
 ---
