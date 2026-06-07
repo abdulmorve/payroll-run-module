@@ -13,4 +13,5 @@
   <Project Path="Payroll.Application/Payroll.Application.csproj" />
   <Project Path="Payroll.Domain/Payroll.Domain.csproj" />
   <Project Path="Payroll.Infrastructure/Payroll.Infrastructure.csproj" />
+  <Project Path="Payroll.Tests/Payroll.Tests.csproj" Id="a4c97d62-edcf-476d-9eb5-34e6fcc93ed9" />
 </Solution>
