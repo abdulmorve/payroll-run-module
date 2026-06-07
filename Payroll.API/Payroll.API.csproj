@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Payroll.Infrastructure\Payroll.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
