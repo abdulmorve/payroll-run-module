@@ -17,6 +17,10 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
+builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
+
+builder.Services.AddScoped<IPayrollService, PayrollService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
