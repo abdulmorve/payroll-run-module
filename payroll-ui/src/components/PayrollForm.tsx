@@ -18,34 +18,43 @@ export default function PayrollForm({
     onRunPayroll,
     onLoadPayroll
 }: Props) {
-
+    const isValidYear = year >= 2020 && year <= 2100;
     return (
         <div className="form-card">
-
             <div className="form-row">
-
-                <select
-                    className="form-control"
-                    value={month}
-                    onChange={(e) => setMonth(Number(e.target.value))}
-                >
-                    {MONTHS.map((monthName, index) => (
-                        <option
-                            key={index + 1}
-                            value={index + 1}
-                        >
-                            {monthName}
-                        </option>
-                    ))}
-                </select>
-
-                <input
-                    className="form-control"
-                    type="number"
-                    value={year}
-                    onChange={(e) => setYear(Number(e.target.value))}
-                />
-
+                <div className="form-group">
+                    <label>Month</label>
+                    <select
+                        className="form-control"
+                        value={month}
+                        onChange={(e) => setMonth(Number(e.target.value))}
+                    >
+                        {MONTHS.map((monthName, index) => (
+                            <option
+                                key={index + 1}
+                                value={index + 1}
+                            >
+                                {monthName}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label>Year</label>
+                    <input
+                        className="form-control"
+                        type="number"
+                        min={2020}
+                        max={2100}
+                        value={year}
+                        onChange={(e) => setYear(Number(e.target.value))}
+                    />
+                    {!isValidYear && (
+                        <small className="validation-error">
+                            Year must be between 2020 and 2100
+                        </small>
+                    )}
+                </div>
             </div>
 
             <div className="button-row">
@@ -53,6 +62,7 @@ export default function PayrollForm({
                 <button
                     className="primary-btn"
                     onClick={onRunPayroll}
+                    disabled={!isValidYear}
                 >
                     Run Payroll
                 </button>
@@ -60,6 +70,7 @@ export default function PayrollForm({
                 <button
                     className="secondary-btn"
                     onClick={onLoadPayroll}
+                    disabled={!isValidYear}
                 >
                     Load Payroll
                 </button>

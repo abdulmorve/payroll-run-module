@@ -74,3 +74,16 @@
 .payslip-btn:hover {
     background: #1d4ed8;
 }
+
+.empty-state {
+    margin-top: 24px;
+    padding: 32px;
+
+    background: white;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    color: #64748b;
+}

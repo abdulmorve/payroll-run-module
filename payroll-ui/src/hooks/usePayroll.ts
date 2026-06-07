@@ -13,13 +13,13 @@ export function usePayroll() {
             return;
     
         const timer = setTimeout(() => {
-            setMessage(null);
-            setError(null);
+            setMessage("");
+            setError("");
         }, 4000);
     
         return () => clearTimeout(timer);
     }, [message, error]);
-    
+
     const runPayrollAndLoad = async (month: number, year: number) => {
         try {
             setLoading(true);

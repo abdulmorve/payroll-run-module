@@ -54,3 +54,33 @@
     background: #64748b;
     color: white;
 }
+
+.year-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.validation-error {
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 12px;
+}
+
+.primary-btn:disabled,
+.secondary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #475569;
+}
