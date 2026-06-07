@@ -1,0 +1,10 @@
+export interface PayrollResult {
+    payrollRunId: number;
+    employeeId: number;
+    name: string;
+    basicSalary: number;
+    grossPay: number;
+    pfDeduction: number;
+    professionalTax: number;
+    netPay: number;
+  }

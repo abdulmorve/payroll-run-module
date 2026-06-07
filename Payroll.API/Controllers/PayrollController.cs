@@ -46,7 +46,7 @@ public class PayrollController : ControllerBase
                 Message = ex.Message
             });
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new { Message = "An unexpected error occurred." });
