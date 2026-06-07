@@ -1,3 +1,4 @@
+import "./PayrollPage.css";
 import { useState } from "react";
 import PayrollForm from "../components/PayrollForm";
 import PayrollTable from "../components/PayrollTable";
@@ -28,8 +29,16 @@ export default function PayrollPage() {
     };
 
     return (
-        <div>
-            <h1>Payroll Run Module</h1>
+        <div className="page">
+            <div className="page-header">
+        <h1 className="page-title">
+            Payroll Run Module
+        </h1>
+
+        <p className="page-subtitle">
+            Generate and view payroll records
+        </p>
+    </div>
 
             <PayrollForm
                 month={month}

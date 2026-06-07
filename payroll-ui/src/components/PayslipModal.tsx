@@ -1,3 +1,4 @@
+import "./PayslipModal.css";
 import type { Payslip } from "../types/payslip";
 
 interface Props {
@@ -12,19 +13,91 @@ export default function PayslipModal({
     if (!payslip) return null;
 
     return (
-        <div>
-            <h2>Payslip</h2>
+        <div
+            className="modal-overlay"
+            onClick={onClose}
+        >
+            <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div className="modal-header">
+                    <h2 className="modal-title">
+                        Employee Payslip
+                    </h2>
 
-            <p>Name: {payslip.name}</p>
-            <p>Basic Salary: {payslip.basicSalary}</p>
-            <p>Gross Pay: {payslip.grossPay}</p>
-            <p>PF Deduction: {payslip.pfDeduction}</p>
-            <p>Professional Tax: {payslip.professionalTax}</p>
-            <p>Net Pay: {payslip.netPay}</p>
+                    <button
+                        className="close-btn"
+                        onClick={onClose}
+                    >
+                        ×
+                    </button>
+                </div>
 
-            <button onClick={onClose}>
-                Close
-            </button>
+                <div className="modal-body">
+
+                    <div className="employee-name">
+                        {payslip.name}
+                    </div>
+
+                    <div className="salary-grid">
+
+                        <div className="salary-item">
+                            <div className="salary-label">
+                                Basic Salary
+                            </div>
+
+                            <div className="salary-value">
+                                ₹{payslip.basicSalary.toLocaleString()}
+                            </div>
+                        </div>
+
+                        <div className="salary-item">
+                            <div className="salary-label">
+                                Gross Pay
+                            </div>
+
+                            <div className="salary-value">
+                                ₹{payslip.grossPay.toLocaleString()}
+                            </div>
+                        </div>
+
+                        <div className="salary-item">
+                            <div className="salary-label">
+                                PF Deduction
+                            </div>
+
+                            <div className="salary-value">
+                                ₹{payslip.pfDeduction.toLocaleString()}
+                            </div>
+                        </div>
+
+                        <div className="salary-item">
+                            <div className="salary-label">
+                                Professional Tax
+                            </div>
+
+                            <div className="salary-value">
+                                ₹{payslip.professionalTax.toLocaleString()}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className="net-pay-card">
+
+                        <div className="net-pay-label">
+                            Net Pay
+                        </div>
+
+                        <div className="net-pay-value">
+                            ₹{payslip.netPay.toLocaleString()}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
     );
 }

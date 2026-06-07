@@ -1,0 +1,76 @@
+.table-card {
+    margin-top: 24px;
+
+    background: white;
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.table-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.payroll-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payroll-table th {
+    background: #f8fafc;
+
+    text-align: left;
+
+    padding: 14px 16px;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.payroll-table td {
+    padding: 14px 16px;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.payroll-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.payroll-table tbody tr:hover {
+    background: #eff6ff;
+
+    transition: background-color 0.2s ease;
+}
+
+.net-pay {
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.payslip-btn {
+    border: none;
+
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    background: #2563eb;
+    color: white;
+
+    cursor: pointer;
+}
+
+.payslip-btn:hover {
+    background: #1d4ed8;
+}

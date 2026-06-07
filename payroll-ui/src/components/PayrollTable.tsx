@@ -1,3 +1,4 @@
+import "./PayrollTable.css";
 import type { PayrollResult } from "../types/payroll";
 
 interface Props {
@@ -12,41 +13,67 @@ export default function PayrollTable({
   if (!payroll.length) return null;
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Employee</th>
-          <th>Gross</th>
-          <th>PF</th>
-          <th>Tax</th>
-          <th>Net</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+    <div className="table-card">
 
-      <tbody>
-        {payroll.map((item) => (
-          <tr key={item.employeeId}>
-            <td>{item.name}</td>
-            <td>{item.grossPay}</td>
-            <td>{item.pfDeduction}</td>
-            <td>{item.professionalTax}</td>
-            <td>{item.netPay}</td>
-            <td>
-              <button
-                onClick={() =>
-                  onViewPayslip(
-                    item.payrollRunId,
-                    item.employeeId
-                  )
-                }
-              >
-                View Payslip
-              </button>
-            </td>
+      <div className="table-header">
+        <h2 className="table-title">
+          Payroll Results
+        </h2>
+      </div>
+
+      <table className="payroll-table">
+
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Gross Pay</th>
+            <th>PF</th>
+            <th>Tax</th>
+            <th>Net Pay</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {payroll.map((item) => (
+            <tr key={item.employeeId}>
+              <td>{item.name}</td>
+
+              <td>
+                ₹{item.grossPay.toLocaleString()}
+              </td>
+
+              <td>
+                ₹{item.pfDeduction.toLocaleString()}
+              </td>
+
+              <td>
+                ₹{item.professionalTax.toLocaleString()}
+              </td>
+
+              <td className="net-pay">
+                ₹{item.netPay.toLocaleString()}
+              </td>
+
+              <td>
+                <button
+                  className="payslip-btn"
+                  onClick={() =>
+                    onViewPayslip(
+                      item.payrollRunId,
+                      item.employeeId
+                    )
+                  }
+                >
+                  View Payslip
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
+      </table>
+
+    </div>
   );
 }

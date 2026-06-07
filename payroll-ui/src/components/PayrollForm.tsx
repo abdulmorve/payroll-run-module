@@ -1,3 +1,6 @@
+import "./PayrollForm.css";
+import { MONTHS } from "../constants/months";
+
 interface Props {
     month: number;
     year: number;
@@ -15,31 +18,54 @@ export default function PayrollForm({
     onRunPayroll,
     onLoadPayroll
 }: Props) {
+
     return (
-        <div>
-            <select
-                value={month}
-                onChange={(e) => setMonth(Number(e.target.value))}
-            >
-                {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i + 1} value={i + 1}>
-                        {i + 1}
-                    </option>
-                ))}
-            </select>
+        <div className="form-card">
 
-            <input
-                type="number"
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
-            />
+            <div className="form-row">
 
-            <button onClick={onRunPayroll}>
-                Run Payroll
-            </button>
-            <button onClick={onLoadPayroll}>
-                Load Payroll
-            </button>
+                <select
+                    className="form-control"
+                    value={month}
+                    onChange={(e) => setMonth(Number(e.target.value))}
+                >
+                    {MONTHS.map((monthName, index) => (
+                        <option
+                            key={index + 1}
+                            value={index + 1}
+                        >
+                            {monthName}
+                        </option>
+                    ))}
+                </select>
+
+                <input
+                    className="form-control"
+                    type="number"
+                    value={year}
+                    onChange={(e) => setYear(Number(e.target.value))}
+                />
+
+            </div>
+
+            <div className="button-row">
+
+                <button
+                    className="primary-btn"
+                    onClick={onRunPayroll}
+                >
+                    Run Payroll
+                </button>
+
+                <button
+                    className="secondary-btn"
+                    onClick={onLoadPayroll}
+                >
+                    Load Payroll
+                </button>
+
+            </div>
+
         </div>
     );
 }
