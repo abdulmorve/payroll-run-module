@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Payroll.Application.DTOs;
 using Payroll.Application.Interfaces;
-using Microsoft.Data.SqlClient;
 
 namespace Payroll.API.Controllers;
 
@@ -23,22 +22,29 @@ public class PayrollController : ControllerBase
         {
             await _payrollService.RunPayrollAsync(request.Month, request.Year);
 
-            return Created(
-                string.Empty,
-                new
-                {
-                    Message =
-                        "Payroll generated successfully."
-                });
+            return Created(string.Empty,
+                            new ApiResponse<object>
+                            {
+                                Success = true,
+                                Message = "Payroll generated successfully."
+                            });
         }
         catch (PayrollAlreadyExistsException ex)
         {
-            return Conflict(new { ex.Message });
+            return Conflict(new ApiResponse<object>
+            {
+                Success = false,
+                Message = ex.Message
+            });
         }
 
         catch (AttendanceNotFoundException ex)
         {
-            return BadRequest(new { ex.Message });
+            return BadRequest(new ApiResponse<object>
+            {
+                Success = false,
+                Message = ex.Message
+            });
         }
         catch (Exception ex)
         {
@@ -55,13 +61,19 @@ public class PayrollController : ControllerBase
 
         if (!payroll.Any())
         {
-            return NotFound(new
+            return NotFound(new ApiResponse<object>
             {
+                Success = false,
                 Message = $"Payroll not found for {month}/{year}"
             });
         }
 
-        return Ok(payroll);
+        return Ok(new ApiResponse<IEnumerable<PayrollResultDto>>
+        {
+            Success = true,
+            Message = "Payroll retrieved successfully",
+            Data = payroll
+        });
     }
 
     [HttpGet("{runId:int}/slip/{employeeId:int}")]
@@ -71,13 +83,19 @@ public class PayrollController : ControllerBase
 
         if (payslip is null)
         {
-            return NotFound(new
+            return NotFound(new ApiResponse<object>
             {
+                Success = false,
                 Message = "Payslip not found"
             });
         }
 
 
-        return Ok(payslip);
+        return Ok(new ApiResponse<PayrollResultDto>
+        {
+            Success = true,
+            Message = "Payslip retrieved successfully",
+            Data = payslip
+        });
     }
 }

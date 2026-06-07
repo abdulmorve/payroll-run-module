@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Payroll.Application.DTOs;
 using Payroll.Application.Interfaces;
 
 namespace Payroll.API.Controllers;
@@ -19,6 +20,11 @@ public class EmployeesController : ControllerBase
     {
         var employees = await _employeeService.GetEmployeesAsync();
 
-        return Ok(employees);
+        return Ok(new ApiResponse<IEnumerable<EmployeeDto>>
+        {
+            Success = true,
+            Message = "Empoyees retrieved successfully",
+            Data = employees
+        });
     }
 }
